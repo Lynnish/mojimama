@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chinese-moji</title>
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 10px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .grid-item {
+    width: 100px;
+    height: 100px;
+    perspective: 600px;
+  }
+
+  .card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+  }
+
+  .card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .card-front {
+    font-size: 40px;
+    background-color: white;
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
+    font-size: 26px;
+    font-weight: bold;
+    color: #007bff;
+    background-color: #e6f3ff;
+    text-align: center;
+    padding: 0 5px;
+  }
+</style>
+
+</head>
+<body>
+  <h1>Learn chinese with mummy 😍</h1>
+  <div class="grid-container" id="emoji-grid"></div>
+
+  <script>
+    const emojis = [
+{ emoji: '🍎',text: '苹果'},
+{ emoji: '🍉',text: '西瓜'},
+{ emoji: '🍓',text: '草莓'},
+{ emoji: '🍋',text: '柠檬'},
+{ emoji: '🍌',text: '香蕉'},
+{ emoji: '🍊',text: '橙子'},
+{ emoji: '🐶',text: '狗'},
+{ emoji: '🐱',text: '猫'},
+{ emoji: '🐰',text: '兔子'},
+{ emoji: '🐮',text: '牛'},
+{ emoji: '🐷',text: '猪'},
+{ emoji: '🐭',text: '老鼠'},
+{ emoji: '🪿',text: '鸭子'},
+{ emoji: '🐠',text: '鱼'},
+{ emoji: '🐘',text: '大象'}
+    ];
+
+    const gridData = [];
+    for (let i = 0; i < 15; i++) {
+      gridData.push(emojis[i % emojis.length]);
+    }
+
+    const gridContainer = document.getElementById('emoji-grid');
+
+    gridData.forEach(item => {
+      const gridItem = document.createElement('div');
+      gridItem.classList.add('grid-item');
+
+      const card = document.createElement('div');
+      card.classList.add('card');
+
+      const front = document.createElement('div');
+      front.classList.add('card-face', 'card-front');
+      front.textContent = item.emoji;
+
+      const back = document.createElement('div');
+      back.classList.add('card-face', 'card-back');
+      back.textContent = item.text;
+
+      card.appendChild(front);
+      card.appendChild(back);
+      gridItem.appendChild(card);
+      gridContainer.appendChild(gridItem);
+
+      gridItem.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+      });
+    });
+  </script>
+</body>
+</html>
